@@ -42,7 +42,11 @@ client = discord.Client(intents=intents)
 
 # Geminiの応答生成関数
 async def generate_gemini_reply(user_input):
-    response = model.generate_content(SYSTEM_PROMPT + "\n" + user_input)
+    response = (
+        f"{SYSTEM_PROMPT}\n"
+        f"参考程度にメッセージをくれた人の名前は「{user_name}」です。\n"
+        f"{user_input}"
+    )
     return response.text
 
 # 起動時イベント
