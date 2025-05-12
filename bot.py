@@ -45,7 +45,6 @@ async def generate_gemini_reply(user_input, user_name):
     full_prompt = (
         f"{SYSTEM_PROMPT}\n"
         f"参考程度にメッセージをくれた人の名前は「{user_name}」です。\n"
-        f"彼に話しかけるときは『{user_name}さん、何かご用ですの？』のように、優雅に名前を呼びかけてから応答を始めてください。\n"
         f"{user_input}"
     )
     response = model.generate_content(full_prompt)
