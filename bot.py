@@ -41,12 +41,14 @@ intents.message_content = True
 client = discord.Client(intents=intents)
 
 # Geminiの応答生成関数
-async def generate_gemini_reply(user_input):
-    response = (
+async def generate_gemini_reply(user_input, user_name):
+    full_prompt = (
         f"{SYSTEM_PROMPT}\n"
         f"参考程度にメッセージをくれた人の名前は「{user_name}」です。\n"
+        f"彼に話しかけるときは『{user_name}さん、何かご用ですの？』のように、優雅に名前を呼びかけてから応答を始めてください。\n"
         f"{user_input}"
     )
+    response = model.generate_content(full_prompt)
     return response.text
 
 # 起動時イベント
@@ -61,8 +63,9 @@ async def on_message(message):
         return
     if client.user in message.mentions:
         user_input = message.content.replace(f"<@{client.user.id}>", "").strip()
+        user_name = message.author.display_name  # 表示名で取得
         await message.channel.typing()
-        reply = await generate_gemini_reply(user_input)
+        reply = await generate_gemini_reply(user_input, user_name)
         await message.channel.send(reply)
 
 # メイン処理
