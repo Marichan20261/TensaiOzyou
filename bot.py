@@ -38,9 +38,7 @@ client = discord.Client(intents=intents)
 
 # 表示名 → あだ名
 NICKNAME_MAP = {
-    "Yamada": "ヤマちん",
-    "Aoi": "あおっち",
-    "Sakura": "さくにゃん",
+
     # ここに追加
 }
 
